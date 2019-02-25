@@ -25,7 +25,33 @@ def lm_train(data_dir, language, fn_LM):
 	e.g., LM['uni']['word'] = 5 		# The word 'word' appears 5 times
 		  LM['bi']['word']['bird'] = 2 	# The bigram 'word bird' appears 2 times.
     """
-	
+	LM = {}
+	LM['uni'] = {}
+	LM['bi'] = {}
+
+	for data in os.listdir(data_dir):
+		with open(data) as f:
+			for sent in f.readlines():
+				processed_sent = preprocess(sent)
+				for word in processed_sent.split(' '):
+					if word in LM['uni'].keys():
+						LM['uni'][word] += 1
+					else:
+						LM['uni'][word] = 1
+				
+				for i in range(len(processed_sent.split(' '))-1):
+					w1 = processed_sent[i]
+					w2 = processed_sent[i+1]
+					if w1 in LM['bi'].keys():
+						if w2 in LM['bi'][w1].keys():
+							LM['bi'][w1][w2] += 1
+						else:
+							LM['bi'][w1][w2] = 1
+					else:
+						LM['bi'][w1] = {}
+						LM['bi'][w1][w2] = 1
+
+
 	# TODO: Implement Function
 
     #Save Model
