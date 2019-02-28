@@ -16,7 +16,7 @@ data_dir = os.getcwd() + '/../data/'
 # lm_train(data_dir, 'f', 'test')
 # print(preprocess(s, 'e'))
 if os.path.getsize(os.getcwd()+'/etest.pickle') > 0:      
-    with open(target, "rb") as f:
+    with open(os.getcwd()+'/etest.pickle', "rb") as f:
         unpickler = pickle.Unpickler(f)
         # if file is not empty scores will be equal
         # to the value unpickled
