@@ -33,7 +33,7 @@ def preplexity(LM, test_dir, language, smoothing = False, delta = 0):
             if tpp > float("-inf"):
                 pp = pp + tpp
                 N += len(processed_line.split())
-                opened_file.close()
+        opened_file.close()
         if N > 0:
             pp = 2**(-pp/N)
         return pp
