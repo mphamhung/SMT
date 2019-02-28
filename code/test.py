@@ -23,4 +23,4 @@ if os.path.getsize(os.getcwd()+'/etest.pickle') > 0:
         lm1 = unpickler.load()
 
 
-log_prob(s, lm1)
+log_prob(s, lm1, smoothing = True, delta = 0.1, vocabSize = 400)
