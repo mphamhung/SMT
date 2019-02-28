@@ -1,6 +1,7 @@
 from preprocess import *
 from lm_train import *
 from log_prob import *
+from perplexity import *
 
 import os
 s = 'That process is underway'
@@ -24,3 +25,7 @@ if os.path.getsize(os.getcwd()+'/etest.pickle') > 0:
 
 
 log_prob(s, lm1, smoothing = True, delta = 0.1, vocabSize = 400)
+
+
+test_dir = '/u/cs401/A2_SMT/data/Hansard/Testing/'
+preplexity(lm1, test_dir, 'e', smoothing = False, delta = 0)
