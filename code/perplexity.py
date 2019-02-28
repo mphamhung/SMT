@@ -34,9 +34,9 @@ def preplexity(LM, test_dir, language, smoothing = False, delta = 0):
                 pp = pp + tpp
                 N += len(processed_line.split())
         opened_file.close()
-        if N > 0:
-            pp = 2**(-pp/N)
-        return pp
+    if N > 0:
+        pp = 2**(-pp/N)
+    return pp
 
 #test
 #test_LM = lm_train("lm_train_testdir/", "e", "e_temp")

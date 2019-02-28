@@ -45,5 +45,5 @@ def log_prob(sentence, LM, smoothing=False, delta=0, vocabSize=0):
 			else:
 				log_prob += float('inf')
 
-		print(log_prob)
+#		print(log_prob)
 	return log_prob        
