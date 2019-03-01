@@ -1,6 +1,6 @@
 from preprocess import *
 from lm_train import *
-from math import log
+from math import log2
 
 def log_prob(sentence, LM, smoothing=False, delta=0, vocabSize=0):
 	"""
@@ -26,24 +26,20 @@ def log_prob(sentence, LM, smoothing=False, delta=0, vocabSize=0):
 		wt_1 = splitted[t+1]
 
 		count_wt = 0.0
+		count_wt_1 = 0.0
 		if wt in LM['uni'].keys():
 			count_wt += LM['uni'][wt]
-
-			count_wt_1 = 0.0
 			if wt_1 in LM['bi'][wt].keys():
 				count_wt_1 += LM['bi'][wt][wt_1]
 
-				if smoothing:
-					log_prob += log((count_wt_1+delta)/(count_wt+delta*vocabSize),2)
-				else:
-					log_prob += log((count_wt_1)/(count_wt),2)
 
-
-		else:
+		if count_wt and count_wt_1:
 			if smoothing:
-				log_prob += log((delta)/(delta*vocabSize),2)
+				log_prob += log2((count_wt_1+delta)/(count_wt+delta*vocabSize))
 			else:
-				log_prob += float('inf')
+				log_prob += log2((count_wt_1/count_wt))
+		else:
+			log_prob += float('-inf')
 
-#		print(log_prob)
+	#	print(log_prob)
 	return log_prob        

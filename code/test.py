@@ -30,7 +30,7 @@ if os.path.getsize(os.getcwd()+'/ftest.pickle') > 0:
         lm2 = unpickler.load()
 
 
-# log_prob(s, lm1, smoothing = True, delta = 0.1, vocabSize = 400)
+log_prob(s, lm1, smoothing = True, delta = 0.1, vocabSize = 400)
 
 print(lm1['uni']['SENTSTART'])
 test_dir = '/u/cs401/A2_SMT/data/Hansard/Testing/'
@@ -47,3 +47,25 @@ print('delta 0.1: ',preplexity(lm2, test_dir, 'f', smoothing = True, delta = 0.1
 print('delta 0.25: ',preplexity(lm2, test_dir, 'f', smoothing = True, delta = 0.25))
 print('delta 0.5: ',preplexity(lm2, test_dir, 'f', smoothing = True, delta = 0.5))
 print('delta 0.75: ',preplexity(lm1, test_dir, 'e', smoothing = True, delta = 0.75))
+
+print('-----Testing English Perplexity-----')
+print('No delta: ', preplexity(lm1, test_dir, 'e', False, 0))
+print('Delta 0.05: ', preplexity(lm1, test_dir, 'e', True, 0.05))
+print('Delta 0.1: ', preplexity(lm1, test_dir, 'e', True, 0.10))
+print('Delta 0.25: ', preplexity(lm1, test_dir, 'e', True, 0.25))
+print('Delta 0.5: ', preplexity(lm1, test_dir, 'e', True, 0.5))
+print('Delta 0.75: ', preplexity(lm1, test_dir, 'e', True, 0.75))
+print('Delta 0.85: ', preplexity(lm1, test_dir, 'e', True, 0.85))
+print('Delta 0.95: ', preplexity(lm1, test_dir, 'e', True, 0.95))
+print('Delta 1: ', preplexity(lm1, test_dir, 'e', True, 1.0))
+
+print('-----Testing French Perplexity-----')
+print('No delta: ', preplexity(lm2, test_dir, 'f', False, 0))
+print('Delta 0.05: ', preplexity(lm2, test_dir, 'f', True, 0.05))
+print('Delta 0.1: ', preplexity(lm2, test_dir, 'f', True, 0.10))
+print('Delta 0.25: ', preplexity(lm2, test_dir, 'f', True, 0.25))
+print('Delta 0.5: ', preplexity(lm2, test_dir, 'f', True, 0.5))
+print('Delta 0.75: ', preplexity(lm2, test_dir, 'f', True, 0.75))
+print('Delta 0.85: ', preplexity(lm2, test_dir, 'f', True, 0.85))
+print('Delta 0.95: ', preplexity(lm2, test_dir, 'f', True, 0.95))
+print('Delta 1: ', preplexity(lm2, test_dir, 'f', True, 1.0))
