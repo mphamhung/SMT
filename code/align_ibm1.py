@@ -37,7 +37,8 @@ def align_ibm1(train_dir, num_sentences, max_iter, fn_AM):
         t = em_step(t,eng,fre)
     
     AM = t
-
+    with open(fn_AM+'.pickle', 'wb') as handle:
+        pickle.dump(AM, handle, protocol=pickle.HIGHEST_PROTOCOL)
     return AM
     
 # ------------ Support functions --------------
