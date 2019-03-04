@@ -1,9 +1,10 @@
 from align_ibm1 import *
 
+train_dir = '/u/cs401/A2_SMT/data/Hansard/Testing/'
 
-e,f = read_hansard('/u/cs401/A2_SMT/data/Hansard/Testing/', 9000)
 
-print(len(e))
+#e,f = read_hansard('/u/cs401/A2_SMT/data/Hansard/Testing/', 9000)
 
-for i in range(len(e)):
-    print(e[i],f[i])
+am = align_ibm1(train_dir, 9000, 100, 'AMTest')
+
+
