@@ -30,15 +30,17 @@ def align_ibm1(train_dir, num_sentences, max_iter, fn_AM):
     eng, fre = read_hansard(train_dir, num_sentences)
         
     # Initialize AM uniformly
-    t = initalize(eng,fre)
+    t = initialize(eng,fre)
 
     # Iterate between E and M steps
-    for _ in range(max_iters):
+    for step in range(max_iter):
+        print('step {}'.format(step))
         t = em_step(t,eng,fre)
 
     AM = t
     with open(fn_AM+'.pickle', 'wb') as handle:
         pickle.dump(AM, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
     return AM
     
 # ------------ Support functions --------------
@@ -97,17 +99,18 @@ def initialize(eng, fre):
     AM = {}
 
     for i in range(len(eng)):
-        for e_word in eng[i].split(' '):
+        for e_word in eng[i].split():
             if e_word not in AM.keys():
                 AM[e_word] = {}
 
-            for f_word in fre[i].split(' '):
-                AM[e_word][f_word] = 1
+                for f_word in fre[i].split():
+                    AM[e_word][f_word] = 1
 
     for e_word in AM.keys():
         for f_word in AM[e_word].keys():
             AM[e_word][f_word] = float(1/len(AM[e_word].keys()))
-
+    
+    print(len(AM))
     return AM
     
 def em_step(t, eng, fre):
@@ -115,12 +118,13 @@ def em_step(t, eng, fre):
 	One step in the EM algorithm.
 	Follows the pseudo-code given in the tutorial slides.
 	"""
-
+    print(len(t))
     tcount = {}
     total = {}
     for j in range(len(eng)):
         E = eng[j].split(' ')
         F = fre[j].split(' ')
+        
         for f in set(F):
             denom_c = 0
             for e in set(E):
