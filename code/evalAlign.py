@@ -3,6 +3,7 @@
 
 import argparse
 import _pickle as pickle
+import os
 
 import decode
 from align_ibm1 import *
@@ -37,7 +38,12 @@ def _getLM(data_dir, language, fn_LM, use_cached=True):
     -------
     A language model 
     """
-    pass
+    if use_cached:
+        LM = pickle.load(os.getcwd()+fn_LM+'.pickle')
+    else:
+        LM = lm_train(data_dir,language,fn_LM)
+    
+    return LM
 
 def _getAM(data_dir, num_sent, max_iter, fn_AM, use_cached=True):
     """
@@ -53,7 +59,12 @@ def _getAM(data_dir, num_sent, max_iter, fn_AM, use_cached=True):
     -------
     An alignment model 
     """
-    pass
+    if use_cached:
+        AM = pickle.load(os.getcwd()+fn_AM+'.pickle')
+    else:
+        AM = align_ibm1(dat_dir, num_sent, max_iter, fn_AM)
+    return AM
+
 
 def _get_BLEU_scores(eng_decoded, eng, google_refs, n):
     """
@@ -68,6 +79,7 @@ def _get_BLEU_scores(eng_decoded, eng, google_refs, n):
     -------
     An array of evaluation (BLEU) scores for the sentences
     """
+    
     pass
    
 
