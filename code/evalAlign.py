@@ -39,7 +39,12 @@ def _getLM(data_dir, language, fn_LM, use_cached=True):
     A language model 
     """
     if use_cached:
-        LM = pickle.load(os.getcwd()+fn_LM+'.pickle')
+        try:
+            path = os.getcwd() +'/' + fn_LM +'.pickle'
+            with open(path, 'rb') as f:
+                LM = pickle.load(path)
+        except FileNotFoundError:
+            LM = lm_train(data_dir,language,fn_LM)
     else:
         LM = lm_train(data_dir,language,fn_LM)
     
@@ -60,9 +65,15 @@ def _getAM(data_dir, num_sent, max_iter, fn_AM, use_cached=True):
     An alignment model 
     """
     if use_cached:
-        AM = pickle.load(os.getcwd()+fn_AM+'.pickle')
+        try:
+            path = os.getcwd() +'/' + fn_AM +'.pickle'
+            with open(path, 'rb') as f:
+                AM = pickle.load(path)
+        except FileNotFoundError:
+            AM = align_ibm1(data_dir, num_sent, max_iter, fn_AM)
     else:
-        AM = align_ibm1(dat_dir, num_sent, max_iter, fn_AM)
+        AM = align_ibm1(data_dir, num_sent, max_iter, fn_AM)
+
     return AM
 
 
@@ -79,8 +90,8 @@ def _get_BLEU_scores(eng_decoded, eng, google_refs, n):
     -------
     An array of evaluation (BLEU) scores for the sentences
     """
-    
-    pass
+
+    return [BLEU_score(eng_decoded[i], [eng[i],google_refs[i]], n) for i in range(len(eng))]
    
 
 def main(args):
@@ -93,7 +104,17 @@ def main(args):
     It's entirely upto you how you want to write Task5.txt. This is just
     an (sparse) example.
     """
+    data_dir = str(args.data_dir)
+    max_iter = int(args.max_iters)
+    use_cached = bool(args.use_cached)
     
+    AM_names = {'1k': 1000, '10k': 10000, '15k': 15000, '30k': 30000}
+    
+    AMs = {name: _getAM(data_dir, num, max_iter, name+'AM', use_cached) for name, num in AM_names.items()}
+    
+    
+    LM = {'e': _getLM(data_dir,'e' ,'eEvalLM', use_cached), 'f': _getLM(data_dir, 'f', 'fEvalLM', use_cached)}
+
 
     ## Write Results to Task5.txt (See e.g. Task5_eg.txt for ideation). ##
 
@@ -126,6 +147,11 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Use parser for debugging if needed")
+    parser.add_argument("--data_dir", help="data directory", required = True)
+    parser.add_argument("--max_iters", help = "The maximum number of iterations for EM", default = 100)
+    parser.add_argument("--use_cached", help = "bool to determine cached use", default = True)
+
     args = parser.parse_args()
+
 
     main(args)
