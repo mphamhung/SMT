@@ -23,9 +23,9 @@ def BLEU_score(candidate, references, n, brevity=False):
     bleu_score :	(float) The BLEU score
     """
     # TODO: Implement by student
-    print(f"CANDIDATE: {candidate}")
-    print(f"REFS: {references}")
-    print(f"n = {n}")
+    #print(f"CANDIDATE: {candidate}")
+    #print(f"REFS: {references}")
+    #print(f"n = {n}")
 
     R = []
     for sent in references:
@@ -56,8 +56,7 @@ def BLEU_score(candidate, references, n, brevity=False):
         c_i = len(candidate.split(' '))
         lengths = [abs(c_i - len(ref.split(' '))) for ref in references]
         best_ind = lengths.index(min(lengths))
-        r_i = float(len(references[best_ind]))
-
+        r_i = float(len(references[best_ind].split(' ')))
 	
         BP = math.exp(1-(r_i/c_i)) if r_i>=c_i else 1
 
@@ -65,7 +64,7 @@ def BLEU_score(candidate, references, n, brevity=False):
 
     return bleu_score
 
-def get_ngrams(listOfSents,n, isSet = False):
+def get_ngrams(listOfSents,n):
     ngrams = []
     for sents in listOfSents:
         tokens = sents.split(' ')

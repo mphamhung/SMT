@@ -108,7 +108,6 @@ def main(args):
     data_dir = str(args.data_dir)
     max_iter = int(args.max_iters)
     use_cached = bool(args.use_cached)
-    print(use_cached)
     test_dir = str(args.test_dir)
     
     
@@ -133,7 +132,7 @@ def main(args):
 
     ## Write Results to Task5.txt (See e.g. Task5_eg.txt for ideation). ##
 
-    f = open("Task5.txt", 'w+')
+    f = open("Task5Brev.txt", 'w+')
     f.write(discussion) 
     f.write("\n\n")
     f.write("-" * 10 + "Evaluation START" + "-" * 10 + "\n")
