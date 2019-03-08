@@ -16,14 +16,14 @@ s = 'That process is underway'
 # # lm_train(data_dir, 'e', 'test')
 # # lm_train(data_dir, 'f', 'test')
 # # print(preprocess(s, 'e'))
-if os.path.getsize(os.getcwd()+'/etest.pickle') > 0:      
-    with open(os.getcwd()+'/etest.pickle', "rb") as f:
+if os.path.getsize(os.getcwd()+'/eEvalLM.pickle') > 0:      
+    with open(os.getcwd()+'/eEvalLM.pickle', "rb") as f:
         unpickler = pickle.Unpickler(f)
         # if file is not empty scores will be equal
         # to the value unpickled
         lm1 = unpickler.load()
-if os.path.getsize(os.getcwd()+'/ftest.pickle') > 0:
-    with open(os.getcwd()+'/ftest.pickle', "rb") as f:
+if os.path.getsize(os.getcwd()+'/fEvalLM.pickle') > 0:
+    with open(os.getcwd()+'/fEvalLM.pickle', "rb") as f:
         unpickler = pickle.Unpickler(f)
         # if file is not empty scores will be equal
         # to the value unpickled
@@ -35,16 +35,18 @@ f_sent = 'Chers collegues, vous me faites un grand honneur en me confiant cette 
 deltas = [0,0.1,0.25,0.5,0.75]
 
 lptxt = e_sent + '\n\n'
-for d in delta:
+for d in deltas:
     l = log_prob(e_sent, lm1, smoothing = True, delta = d, vocabSize = 400)
     lptxt += f'Delta = {d}' + f'log probability = {l} \n'
 
 lptxt += f_sent + '\n\n'
-for d in delta:
+for d in deltas:
     l = log_prob(f_sent, lm2, smoothing = True, delta = d, vocabSize = 400)
-    lptxt += f'Delta = {d}' + f'log probability = {l}'
+    lptxt += f'Delta = {d}' + f'log probability = {l}\n'
 f = open("Task3.txt", "w+")
 
+f.write('---- Log probabilities with a sentence ----\n\n')
+f.write(lptxt)
 discussion = '''
 Discussion:
 

@@ -1,7 +1,26 @@
+---- Log probabilities with a sentence ----
+
+It is indeed a great honour to be entrusted with this task.
+
+Delta = 0log probability = -inf 
+Delta = 0.1log probability = -inf 
+Delta = 0.25log probability = -inf 
+Delta = 0.5log probability = -inf 
+Delta = 0.75log probability = -inf 
+Chers collegues, vous me faites un grand honneur en me confiant cette tache.
+
+Delta = 0log probability = -inf
+Delta = 0.1log probability = -inf
+Delta = 0.25log probability = -inf
+Delta = 0.5log probability = -inf
+Delta = 0.75log probability = -inf
 
 Discussion:
 
+We notice that the MLE model has the lowest perplexity and as we increase the delta smoothing, the perplexity also increases. Mathematically, we notice that the log likelihood decreases as delta increases, and the perplixity is inversly proportional to the log likelihood, thus explaining the increases in perplexity. From the below results we can conclude that increasing delta towards 1 results in a worse performing model. 
+Refering to the test and training corpus, they are both from the Canadian Hansards, so their is potential for a large overlap in language. Adding delta smoothing to unknown words will thus not help that much.
 
+---------
 English Perplexity Testing
 
 No delta: 11.565966234268274
