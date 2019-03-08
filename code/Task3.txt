@@ -1,19 +1,21 @@
 ---- Log probabilities with a sentence ----
 
-It is indeed a great honour to be entrusted with this task.
+SENTSTART It is indeed a great honour to be entrusted with this task . SENTEND
 
-Delta = 0log probability = -inf 
-Delta = 0.1log probability = -inf 
-Delta = 0.25log probability = -inf 
-Delta = 0.5log probability = -inf 
-Delta = 0.75log probability = -inf 
-Chers collegues, vous me faites un grand honneur en me confiant cette tache.
+Delta: 0 log probability = -69.50919931145674
+Delta: 0.1 log probability = -96.624558452306
+Delta: 0.25 log probability = -104.55242946894558
+Delta: 0.5 log probability = -111.50152771910308
+Delta: 0.75 log probability = -115.96113259484274
 
-Delta = 0log probability = -inf
-Delta = 0.1log probability = -inf
-Delta = 0.25log probability = -inf
-Delta = 0.5log probability = -inf
-Delta = 0.75log probability = -inf
+
+SENTSTART Chers collegues , vous me faites un grand honneur en me confiant cette tache . SENTEND
+
+Delta: 0 log probability = -102.78295021916664
+Delta: 0.1 log probability = -143.96247442372575
+Delta: 0.25 log probability = -156.39635131249753
+Delta: 0.5 log probability = -166.4737523490347
+Delta: 0.75 log probability = -172.47801535943339
 
 Discussion:
 
