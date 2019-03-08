@@ -16,37 +16,39 @@ s = 'That process is underway'
 # # lm_train(data_dir, 'e', 'test')
 # # lm_train(data_dir, 'f', 'test')
 # # print(preprocess(s, 'e'))
-if os.path.getsize(os.getcwd()+'/eEvalLM.pickle') > 0:      
-    with open(os.getcwd()+'/eEvalLM.pickle', "rb") as f:
+if os.path.getsize(os.getcwd()+'/etest.pickle') > 0:      
+    with open(os.getcwd()+'/etest.pickle', "rb") as f:
         unpickler = pickle.Unpickler(f)
         # if file is not empty scores will be equal
         # to the value unpickled
         lm1 = unpickler.load()
-if os.path.getsize(os.getcwd()+'/fEvalLM.pickle') > 0:
-    with open(os.getcwd()+'/fEvalLM.pickle', "rb") as f:
+if os.path.getsize(os.getcwd()+'/ftest.pickle') > 0:
+    with open(os.getcwd()+'/ftest.pickle', "rb") as f:
         unpickler = pickle.Unpickler(f)
         # if file is not empty scores will be equal
         # to the value unpickled
         lm2 = unpickler.load()
 
-e_sent = 'It is indeed a great honour to be entrusted with this task.'
-f_sent = 'Chers collegues, vous me faites un grand honneur en me confiant cette tache.'
+e_sent = preprocess('It is indeed a great honour to be entrusted with this task.','e')
+f_sent = preprocess('Chers collegues, vous me faites un grand honneur en me confiant cette tache.','f')
 
 deltas = [0,0.1,0.25,0.5,0.75]
 
 lptxt = e_sent + '\n\n'
 for d in deltas:
-    l = log_prob(e_sent, lm1, smoothing = True, delta = d, vocabSize = 400)
-    lptxt += f'Delta = {d}' + f'log probability = {l} \n'
+    l = log_prob(e_sent, lm1, smoothing = True if d != 0 else False, delta = d, vocabSize = len(lm1['uni']))
+    lptxt += 'Delta: ' + str(d) + ' log probability = ' + str(l) +'\n'
 
+lptxt += '\n\n'
 lptxt += f_sent + '\n\n'
 for d in deltas:
-    l = log_prob(f_sent, lm2, smoothing = True, delta = d, vocabSize = 400)
-    lptxt += f'Delta = {d}' + f'log probability = {l}\n'
+    l = log_prob(f_sent, lm2, smoothing = True if d != 0 else False, delta = d, vocabSize = len(lm2['uni']))
+    lptxt += 'Delta: ' + str(d) + ' log probability = ' + str(l) +'\n'
 f = open("Task3.txt", "w+")
 
 f.write('---- Log probabilities with a sentence ----\n\n')
 f.write(lptxt)
+
 discussion = '''
 Discussion:
 
@@ -85,25 +87,3 @@ f.write('delta 0.5: ' + str(preplexity(lm2, test_dir, 'f', smoothing = True, del
 f.write('\n')
 f.write('delta 0.75: ' + str(preplexity(lm1, test_dir, 'e', smoothing = True, delta = 0.75)))
 f.write('\n')
-
-#print('-----Testing English Perplexity-----')
-#print('No delta: ', preplexity(lm1, test_dir, 'e', False, 0))
-#print('Delta 0.05: ', preplexity(lm1, test_dir, 'e', True, 0.05))
-#print('Delta 0.1: ', preplexity(lm1, test_dir, 'e', True, 0.10))
-#print('Delta 0.25: ', preplexity(lm1, test_dir, 'e', True, 0.25))
-#print('Delta 0.5: ', preplexity(lm1, test_dir, 'e', True, 0.5))
-#print('Delta 0.75: ', preplexity(lm1, test_dir, 'e', True, 0.75))
-#print('Delta 0.85: ', preplexity(lm1, test_dir, 'e', True, 0.85))
-#print('Delta 0.95: ', preplexity(lm1, test_dir, 'e', True, 0.95))
-#print('Delta 1: ', preplexity(lm1, test_dir, 'e', True, 1.0))
-
-# print('-----Testing French Perplexity-----')
-# print('No delta: ', preplexity(lm2, test_dir, 'f', False, 0))
-# print('Delta 0.05: ', preplexity(lm2, test_dir, 'f', True, 0.05))
-# print('Delta 0.1: ', preplexity(lm2, test_dir, 'f', True, 0.10))
-# print('Delta 0.25: ', preplexity(lm2, test_dir, 'f', True, 0.25))
-# print('Delta 0.5: ', preplexity(lm2, test_dir, 'f', True, 0.5))
-# print('Delta 0.75: ', preplexity(lm2, test_dir, 'f', True, 0.75))
-# print('Delta 0.85: ', preplexity(lm2, test_dir, 'f', True, 0.85))
-# print('Delta 0.95: ', preplexity(lm2, test_dir, 'f', True, 0.95))
-# print('Delta 1: ', preplexity(lm2, test_dir, 'f', True, 1.0))
