@@ -29,15 +29,29 @@ if os.path.getsize(os.getcwd()+'/ftest.pickle') > 0:
         # to the value unpickled
         lm2 = unpickler.load()
 
+e_sent = 'It is indeed a great honour to be entrusted with this task.'
+f_sent = 'Chers collegues, vous me faites un grand honneur en me confiant cette tache.'
 
-#log_prob(s, lm1, smoothing = True, delta = 0.1, vocabSize = 400)
+deltas = [0,0.1,0.25,0.5,0.75]
 
+lptxt = e_sent + '\n\n'
+for d in delta:
+    l = log_prob(e_sent, lm1, smoothing = True, delta = d, vocabSize = 400)
+    lptxt += f'Delta = {d}' + f'log probability = {l} \n'
+
+lptxt += f_sent + '\n\n'
+for d in delta:
+    l = log_prob(f_sent, lm2, smoothing = True, delta = d, vocabSize = 400)
+    lptxt += f'Delta = {d}' + f'log probability = {l}'
 f = open("Task3.txt", "w+")
 
 discussion = '''
 Discussion:
 
+We notice that the MLE model has the lowest perplexity and as we increase the delta smoothing, the perplexity also increases. Mathematically, we notice that the log likelihood decreases as delta increases, and the perplixity is inversly proportional to the log likelihood, thus explaining the increases in perplexity. From the below results we can conclude that increasing delta towards 1 results in a worse performing model. 
+Refering to the test and training corpus, they are both from the Canadian Hansards, so their is potential for a large overlap in language. Adding delta smoothing to unknown words will thus not help that much.
 
+---------
 '''
 
 f.write(discussion)
