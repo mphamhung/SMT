@@ -20,7 +20,7 @@ __license__ = 'MIT'
 discussion = """
 Discussion :
 
-{Enter your intriguing discussion (explaining observations/results) here}
+Below are the observations with brevity set to False (default). In general, BlEU scores for lower n-gram counts are higher than those of higher n-gram counts  (i.e. uni-gram scores > bi-gram scores). Most likely because higher n-grams are less likely to match with the machine translatation. Furthermore, the BLEU scores for n = 3 are mostly zero, due to the fact that the language model does not contain any trigrams. Further we observe that the Bleu scores mostly increase as we add more training data to the alignment model. We would think that more data would provide a better translation, but we only train the alignment models with a maximum of 100 iterations. More data may require more iterations of the EM step to get higher probabilities for the true alignments.
 
 """
 
