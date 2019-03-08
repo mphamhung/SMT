@@ -23,6 +23,9 @@ def BLEU_score(candidate, references, n, brevity=False):
     bleu_score :	(float) The BLEU score
     """
     # TODO: Implement by student
+    print(f"CANDIDATE: {candidate}")
+    print(f"REFS: {references}")
+    print(f"n = {n}")
 
     R = []
     for sent in references:
@@ -31,15 +34,21 @@ def BLEU_score(candidate, references, n, brevity=False):
     R = set(R)
 
     #p1
-    bleu_score = len([ canditate_word for canditate_word in canditate.split(' ') if i in R])/float(len(canditate.split(' ')))
+    bleu_score = len([ candidate_word for candidate_word in candidate.split(' ') if candidate_word in R])/float(len(candidate.split(' ')))
 
     if n >= 2:
-        #p2
-        bleu_score *= len([k for k in get_ngrams([canditate],2) if k in get_ngrams(references,2,True)])/float(len(get_ngrams([canditate],2)))
+    #    #p2
+        c_bigrams = get_ngrams([candidate],2)
+        r_bigrams = get_ngrams(references,2)
+        bleu_score *= (len([k for k in c_bigrams if k in r_bigrams]))/float(len(c_bigrams))
+        #bleu_score *= len([k for k in get_ngrams([candidate],2)/ if k in get_ngrams(references,2,True)])/float(len(get_ngrams([candidate],2)))
 
     if n >= 3:
         #p3
-        bleu_score *= len([k for k in get_ngrams([canditate],3) if k in get_ngrams(references,3,True)])/float(len(get_ngrams([canditate],3)))
+        c_trigrams = get_ngrams([candidate],3)
+        r_trigrams = get_ngrams(references, 3)
+        bleu_score *= (len([k for k in c_trigrams if k in r_trigrams]))/float(len(c_trigrams))
+        #bleu_score *= len([k for k in get_ngrams([candidate],3) if k in get_ngrams(references,3,True)])/float(len(get_ngrams([candidate],3)))
 
     bleu_score **= 1/n
 
@@ -60,10 +69,9 @@ def get_ngrams(listOfSents,n, isSet = False):
     ngrams = []
     for sents in listOfSents:
         tokens = sents.split(' ')
-        for i in range(n,len(tokens)):
+        for i in range(n,len(tokens)+1):
             ngrams.append(' '.join(tokens[i-n:i]))
-    if isSet:
-        ngrams = set(ngrams)
-    return bigrams
+    #print(ngrams) 
+    return ngrams
 
 

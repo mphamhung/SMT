@@ -99,7 +99,7 @@ def initialize(eng, fre):
     AM = {}
 
     for i in range(len(eng)):
-        for e_word in eng[i].split(' '):
+        for e_word in eng[i].split(' '):       
             if e_word not in AM.keys():
                 AM[e_word] = {}
 
@@ -108,8 +108,13 @@ def initialize(eng, fre):
 
     for e_word in AM.keys():
         for f_word in AM[e_word].keys():
-            AM[e_word][f_word] = float(1/len(AM[e_word].keys()))
-    
+            if e_word == 'SENTSTART' or e_word == 'SENTEND':
+                if f_word == e_word:
+                    AM[e_word][f_word] = 1
+                else:
+                    AM[e_word][f_word] = 0
+            else:
+                AM[e_word][f_word] = float(1/len(AM[e_word].keys()))
     return AM
     
 def em_step(t, eng, fre):

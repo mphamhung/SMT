@@ -52,7 +52,8 @@ def lm_train(data_dir, language, fn_LM):
 					else:
 						LM['bi'][w1] = {}
 						LM['bi'][w1][w2] = 1
-
+				if processed_sent.split(' ')[-1] not in LM['bi'].keys():
+					LM['bi'][processed_sent.split(' ')[-1]] = {}
 	language_model = LM
 	#Save Model
 	with open(fn_LM+'.pickle', 'wb') as handle:
